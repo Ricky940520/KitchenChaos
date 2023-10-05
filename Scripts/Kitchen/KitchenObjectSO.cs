@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewKitchenObjectData", menuName = "Custom/KitchenObjectSO")]
+[CreateAssetMenu(fileName = "NewKitchenObjectSO", menuName = "Custom/KitchenObjectSO")]
 public class KitchenObjectSO : ScriptableObject
 {
     public Transform Prefab;

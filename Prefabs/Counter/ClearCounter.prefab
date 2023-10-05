@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8722d669194703643924d1396f38ddc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kitchenObjectSO: {fileID: 11400000, guid: 6b73cd8bb4fe1c34d95b7e2f5098efa8, type: 2}
+  kitchenObjectSO: {fileID: 0}
   counterTopPoint: {fileID: 3326620076634642749}
 --- !u!114 &988229692340502289
 MonoBehaviour:

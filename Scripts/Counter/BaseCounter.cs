@@ -39,7 +39,7 @@ public class BaseCounter : MonoBehaviour, IHoldKitchenObject
     /// <summary>
     /// Spawn Kitchen Object
     /// </summary>
-    public virtual void SpawnKitchenObject()
+    public void SpawnKitchenObject()
     {
         if (kitchenObjectSO != null)
         {
