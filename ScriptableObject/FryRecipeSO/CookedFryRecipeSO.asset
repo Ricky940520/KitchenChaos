@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182633774753c4340baaa13a0bab4df3, type: 3}
+  m_Name: CookedFryRecipeSO
+  m_EditorClassIdentifier: 
+  InputMeatPattyKitchenObjectSO: {fileID: 11400000, guid: 0c3c63e208ebbdc41913c324d076ae48,
+    type: 2}
+  OutputMeatPattyKitchenObjectSO: {fileID: 11400000, guid: 50b19a304efe4a945a8eaad7853c895d,
+    type: 2}
+  CookingTime: 3

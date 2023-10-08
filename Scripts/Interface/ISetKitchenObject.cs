@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IHoldKitchenObject
+public interface ISetKitchenObject
 {
     /// <summary>
     /// Hold kitchen object

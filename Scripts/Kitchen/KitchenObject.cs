@@ -20,4 +20,22 @@ public class KitchenObject : MonoBehaviour
     {
         return kitchenObjectSO;
     }
+
+    /// <summary>
+    /// Set kitchen object data
+    /// </summary>
+    /// <param name="obj"></param>
+    public void SetKitchenObjectSO(KitchenObjectSO obj)
+    {
+        this.kitchenObjectSO = obj;
+    }
+
+    /// <summary>
+    /// Destroy
+    /// </summary>
+    public void DestroySelf()
+    {
+        Destroy(this.gameObject);
+        this.kitchenObjectSO = null;
+    }
 }

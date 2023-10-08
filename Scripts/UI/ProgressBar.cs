@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CuttingCounterBar : MonoBehaviour
+public class ProgressBar : MonoBehaviour
 {
     /// <summary>
     /// cutting process bar image UI 
     /// </summary>
     private Image cuttingProcessBar;
 
-    [SerializeField] private CuttingCounter cuttingCounter;
+    [SerializeField] private BaseCounter counter;
+    private IHasProgressBar progressBar;
 
     private void Awake()
     {
         cuttingProcessBar = GetComponent<Image>();
+        progressBar = counter.GetComponent<IHasProgressBar>();
     }
 
     private void Start()
     {
-        cuttingCounter.OnCutProcessCountChangedUpdateUI += CuttingCounter_OnCutProcessCountChanged;
+        progressBar.OnProgressBarChanged += IHasProgressBar_OnProgressBarChanged;
         Hide();
     }
 
     /// <summary>
     /// set cutting process bar image percent
+    /// hide it when cuttingProcessPercent equal 1
     /// </summary>
     /// <param name="cuttingProcessPercent"></param>
-    private void CuttingCounter_OnCutProcessCountChanged(float cuttingProcessPercent)
+    private void IHasProgressBar_OnProgressBarChanged(float cuttingProcessPercent)
     {
         if (cuttingProcessPercent != 1)
         {

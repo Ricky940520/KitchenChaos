@@ -5,13 +5,8 @@ using UnityEngine;
 /// <summary>
 /// prototype of counter
 /// </summary>
-public class BaseCounter : MonoBehaviour, IHoldKitchenObject
+public class BaseCounter : MonoBehaviour, ISetKitchenObject
 {
-    /// <summary>
-    /// Kitchen Object Scriptable Object (be prefab)
-    /// </summary>
-    [SerializeField] private KitchenObjectSO kitchenObjectSO;
-
     /// <summary>
     /// the point of kitchen object spawn
     /// </summary>
@@ -36,19 +31,7 @@ public class BaseCounter : MonoBehaviour, IHoldKitchenObject
         return kitchenObject != null;
     }
 
-    /// <summary>
-    /// Spawn Kitchen Object
-    /// </summary>
-    public void SpawnKitchenObject()
-    {
-        if (kitchenObjectSO != null)
-        {
-            kitchenObjectTransform = Instantiate(kitchenObjectSO.Prefab, GetCounterTopPoint());
-            kitchenObjectTransform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-            kitchenObject = kitchenObjectTransform.GetComponent<KitchenObject>();
-        }
 
-    }
 
     /// <summary>
     /// when E pressed 
@@ -64,7 +47,7 @@ public class BaseCounter : MonoBehaviour, IHoldKitchenObject
     /// <param name="player"></param>
     public virtual void InteractAlternate(PlayerInteract player)
     {
-        Debug.LogError("should not be here!!!");
+        //Debug.LogError("should not be here!!!");
     }
 
     /// <summary>
@@ -97,11 +80,4 @@ public class BaseCounter : MonoBehaviour, IHoldKitchenObject
         this.kitchenObject = null;
         kitchenObjectTransform = null;
     }
-
-    public void DestroyKitchenObject()
-    {
-        Destroy(kitchenObject.gameObject);
-        SetKitchenObjectToNull();
-    }
-
 }

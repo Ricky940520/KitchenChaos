@@ -6,16 +6,33 @@ using UnityEngine;
 public class ContainerCounter : BaseCounter
 {
     /// <summary>
+    /// Kitchen Object Scriptable Object (be prefab)
+    /// </summary>
+    [SerializeField] private KitchenObjectSO kitchenObjectSO;
+
+    /// <summary>
     /// Fire container counter's animator
     /// </summary>
     public Action OnContainerCounterInteractFireAnimator;
+
+    /// <summary>
+    /// Spawn Kitchen Object
+    /// </summary>
+    private void SpawnKitchenObject()
+    {
+        if (kitchenObjectSO != null)
+        {
+            kitchenObjectTransform = Instantiate(kitchenObjectSO.Prefab, GetCounterTopPoint());
+            kitchenObjectTransform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            kitchenObject = kitchenObjectTransform.GetComponent<KitchenObject>();
+        }
+    }
 
     /// <summary>
     /// when E pressed 
     /// </summary>
     public override void Interact(PlayerInteract player)
     {
-
         if (!player.PlayerHasKitchenObject())
         {
             //when player has nothing 
@@ -25,7 +42,5 @@ public class ContainerCounter : BaseCounter
 
             OnContainerCounterInteractFireAnimator?.Invoke();
         }
-
-
     }
 }

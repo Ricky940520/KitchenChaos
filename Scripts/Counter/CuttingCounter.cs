@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CuttingCounter : BaseCounter
+public class CuttingCounter : BaseCounter, IHasProgressBar
 {
     /// <summary>
     /// Mapping kitchen object to kitchen object slices
@@ -23,14 +23,14 @@ public class CuttingCounter : BaseCounter
     private int cutProcessCount;
 
     /// <summary>
-    /// update UI when cut process count changed
-    /// </summary>
-    public Action<float> OnCutProcessCountChangedUpdateUI;
-
-    /// <summary>
     /// fire animation when cut process count changed
     /// </summary>
     public Action OnCutProcessCountChangedFireAnimator;
+
+    /// <summary>
+    /// Update Progress Bar
+    /// </summary>
+    public Action<float> OnProgressBarChanged { get; set; }
 
     private void Awake()
     {
@@ -44,6 +44,8 @@ public class CuttingCounter : BaseCounter
         {
             kitchenObjectSlicedSODic.Add(element.KitchenObjectSO, element.KitchenObjectSlicesSO);
         }
+
+        cutProcessCount = 0;
     }
 
     public override void Interact(PlayerInteract player)
@@ -55,7 +57,7 @@ public class CuttingCounter : BaseCounter
             {
                 //player is grabing something
                 this.SetKitchenObject(player.GetPlayerKitchenObject());
-                cutProcessCount = 0;
+
             }
         }
         else
@@ -70,6 +72,7 @@ public class CuttingCounter : BaseCounter
             {
                 //player is not grabing anything
                 player.SetKitchenObject(kitchenObject);
+                OnProgressBarChanged?.Invoke(1);
             }
         }
     }
@@ -105,7 +108,7 @@ public class CuttingCounter : BaseCounter
         }
 
         float cutProcessPercent = (float)cutProcessCount / cutProcessMaximum;
-        OnCutProcessCountChangedUpdateUI?.Invoke(cutProcessPercent);
+        OnProgressBarChanged?.Invoke(cutProcessPercent);
         OnCutProcessCountChangedFireAnimator?.Invoke();
 
         if (cutProcessCount >= cutProcessMaximum)

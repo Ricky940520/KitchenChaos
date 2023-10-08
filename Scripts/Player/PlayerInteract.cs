@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Player's interaction
 /// </summary>
-public class PlayerInteract : MonoBehaviour, IHoldKitchenObject
+public class PlayerInteract : MonoBehaviour, ISetKitchenObject
 {
     public static PlayerInteract Instance { get; private set; }
 
