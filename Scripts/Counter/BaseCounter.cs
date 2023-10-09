@@ -13,12 +13,12 @@ public class BaseCounter : MonoBehaviour, ISetKitchenObject
     [SerializeField] private Transform counterTopPoint;
 
     /// <summary>
-    /// kitchen object's Data
+    /// Counter's kitchen object's Data
     /// </summary>
     protected KitchenObject kitchenObject = null;
 
     /// <summary>
-    /// kitchen object's Transform
+    /// Counter's kitchen object's Transform
     /// </summary>
     protected Transform kitchenObjectTransform = null;
 

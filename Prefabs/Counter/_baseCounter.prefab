@@ -99,8 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 911545b39094793449eb2120b7b53cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedCounterGO:
-  - {fileID: 0}
+  selectedCounterGO: []
 --- !u!1 &8565664228338136529
 GameObject:
   m_ObjectHideFlags: 0
