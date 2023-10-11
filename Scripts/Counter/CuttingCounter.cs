@@ -66,7 +66,22 @@ public class CuttingCounter : BaseCounter, IHasProgressBar
             if (player.PlayerHasKitchenObject())
             {
                 //player is grabing something
-                //do nothing
+                if (player.GetPlayerKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject))
+                {
+                    //player is grabing plate
+                    if (plateKitchenObject.TryAddIngredient(kitchenObject))
+                    {
+                        kitchenObject.DestroySelf();
+                    }
+                }
+                else if (kitchenObject.TryGetPlate(out plateKitchenObject))
+                {
+                    //if Counter has plate on it                   
+                    if (plateKitchenObject.TryAddIngredient(player.GetPlayerKitchenObject()))
+                    {
+                        player.GetPlayerKitchenObject().DestroySelf();
+                    }
+                }
             }
             else
             {

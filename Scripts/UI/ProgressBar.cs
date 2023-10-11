@@ -26,7 +26,7 @@ public class ProgressBar : MonoBehaviour
     }
 
     /// <summary>
-    /// set cutting process bar image percent
+    /// set cutting process bar image percent.
     /// hide it when cuttingProcessPercent equal 1
     /// </summary>
     /// <param name="cuttingProcessPercent"></param>
