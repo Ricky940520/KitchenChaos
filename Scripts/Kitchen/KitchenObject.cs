@@ -39,6 +39,11 @@ public class KitchenObject : MonoBehaviour
         this.kitchenObjectSO = null;
     }
 
+    /// <summary>
+    /// If is a plate
+    /// </summary>
+    /// <param name="plateKitchenObject"></param>
+    /// <returns></returns>
     public bool TryGetPlate(out PlateKitchenObject plateKitchenObject)
     {
         if (this is PlateKitchenObject)

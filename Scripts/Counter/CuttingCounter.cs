@@ -28,6 +28,11 @@ public class CuttingCounter : BaseCounter, IHasProgressBar
     public Action OnCutProcessCountChangedFireAnimator;
 
     /// <summary>
+    /// Play Sound Effect
+    /// </summary>
+    public static Action<CuttingCounter> OnCuttingPlaySound;
+
+    /// <summary>
     /// Update Progress Bar
     /// </summary>
     public Action<float> OnProgressBarChanged { get; set; }
@@ -125,6 +130,7 @@ public class CuttingCounter : BaseCounter, IHasProgressBar
         float cutProcessPercent = (float)cutProcessCount / cutProcessMaximum;
         OnProgressBarChanged?.Invoke(cutProcessPercent);
         OnCutProcessCountChangedFireAnimator?.Invoke();
+        OnCuttingPlaySound?.Invoke(this);
 
         if (cutProcessCount >= cutProcessMaximum)
         {

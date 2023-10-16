@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,11 @@ public class BaseCounter : MonoBehaviour, ISetKitchenObject
     /// Counter's kitchen object's Transform
     /// </summary>
     protected Transform kitchenObjectTransform = null;
+
+    /// <summary>
+    /// play sound
+    /// </summary>
+    public static Action OnKitchenObjectDropedPlaySound;
 
     /// <summary>
     /// when ClearCounter has kitchen object return true otherwise false
@@ -73,6 +79,8 @@ public class BaseCounter : MonoBehaviour, ISetKitchenObject
         kitchenObjectTransform = this.kitchenObject.transform;
 
         PlayerInteract.Instance.SetKitchenObjectToNull();
+
+        OnKitchenObjectDropedPlaySound?.Invoke();
     }
 
     public void SetKitchenObjectToNull()

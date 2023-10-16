@@ -41,6 +41,11 @@ public class PlayerInteract : MonoBehaviour, ISetKitchenObject
     /// </summary>
     private KitchenObject kitchenObject = null;
 
+    /// <summary>
+    /// play Sound Effect
+    /// </summary>
+    public Action OnPlayerGrabSomethingPlaySound;
+
     private void Awake()
     {
         Instance = this;
@@ -117,6 +122,8 @@ public class PlayerInteract : MonoBehaviour, ISetKitchenObject
         this.kitchenObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
         selectedCounter.SetKitchenObjectToNull();
+
+        OnPlayerGrabSomethingPlaySound?.Invoke();
     }
 
     /// <summary>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,14 +6,19 @@ using UnityEngine;
 public class PlateKitchenObject : KitchenObject
 {
     /// <summary>
-    /// only cooked kitchen object is valid
+    /// only cooked valid kitchen object 
     /// </summary>
     [SerializeField] private List<KitchenObjectSO> validKitchenObjectList = new List<KitchenObjectSO>();
 
     /// <summary>
-    /// All ingredient list
+    /// Dish ingredient list
     /// </summary>
-    private List<KitchenObjectSO> kitchenObjectIngredientList = new List<KitchenObjectSO>();
+    private List<KitchenObjectSO> DishIngredientList = new List<KitchenObjectSO>();
+
+    /// <summary>
+    /// Update the plate complete visual
+    /// </summary>
+    public Action<KitchenObjectSO> OnKitchenObjectIngredientListChanged;
 
 
     /// <summary>
@@ -24,20 +30,28 @@ public class PlateKitchenObject : KitchenObject
     {
         if (!validKitchenObjectList.Contains(kitchenObject.GetKitchenObjectSO()))
         {
+            //when kitchen object is not valid
             return false;
         }
         else
         {
-            if (kitchenObjectIngredientList.Contains(kitchenObject.GetKitchenObjectSO()))
+            if (DishIngredientList.Contains(kitchenObject.GetKitchenObjectSO()))
             {
+                //when the ingredient is duplicate
                 return false;
             }
             else
             {
-                kitchenObjectIngredientList.Add(kitchenObject.GetKitchenObjectSO());
+                DishIngredientList.Add(kitchenObject.GetKitchenObjectSO());
+                OnKitchenObjectIngredientListChanged?.Invoke(kitchenObject.GetKitchenObjectSO());
                 return true;
             }
         }
+    }
+
+    public List<KitchenObjectSO> GetDishIngredientList()
+    {
+        return DishIngredientList;
     }
 
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    public static PlayerMove Instance;
+
     private CharacterController characterController;
 
     /// <summary>
@@ -25,6 +27,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         characterController = GetComponent<CharacterController>();
     }
 
