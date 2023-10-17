@@ -46,6 +46,8 @@ public class PlayerInteract : MonoBehaviour, ISetKitchenObject
     /// </summary>
     public Action OnPlayerGrabSomethingPlaySound;
 
+    private bool isPlayingGame = false;
+
     private void Awake()
     {
         Instance = this;
@@ -55,6 +57,19 @@ public class PlayerInteract : MonoBehaviour, ISetKitchenObject
     {
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
         GameInput.Instance.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
+        KitchenChaosGameManager.Instance.OnStateChanged += KitchenChaosGameManager_OnStateChanged;
+    }
+
+    private void KitchenChaosGameManager_OnStateChanged(KitchenChaosGameManager.GameState state)
+    {
+        if (state == KitchenChaosGameManager.GameState.PlayingGame)
+        {
+            isPlayingGame = true;
+        }
+        else
+        {
+            isPlayingGame = false;
+        }
     }
 
     /// <summary>
@@ -63,7 +78,7 @@ public class PlayerInteract : MonoBehaviour, ISetKitchenObject
     /// <param name="context"></param>
     private void GameInput_OnInteractAction(InputAction.CallbackContext context)
     {
-        if (selectedCounter != null)
+        if (selectedCounter != null && isPlayingGame)
         {
             selectedCounter.Interact(this);
         }
@@ -74,7 +89,7 @@ public class PlayerInteract : MonoBehaviour, ISetKitchenObject
     /// </summary>
     private void GameInput_OnInteractAlternateAction(InputAction.CallbackContext context)
     {
-        if (selectedCounter != null)
+        if (selectedCounter != null && isPlayingGame)
         {
             selectedCounter.InteractAlternate(this);
         }

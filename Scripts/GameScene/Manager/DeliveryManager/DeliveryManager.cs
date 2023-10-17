@@ -27,9 +27,30 @@ public class DeliveryManager : MonoBehaviour
     public Action OnDeliveryFailedPlaySound;
     public Action OnDeliveryCompletedPlaySound;
 
+    private bool isPlayingGame = false;
+
+    private int deliveryScore = 0;
+
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        KitchenChaosGameManager.Instance.OnStateChanged += KitchenChaosGameManager_OnStateChanged;
+    }
+
+    private void KitchenChaosGameManager_OnStateChanged(KitchenChaosGameManager.GameState gameState)
+    {
+        if (gameState == KitchenChaosGameManager.GameState.PlayingGame)
+        {
+            isPlayingGame = true;
+        }
+        else
+        {
+            isPlayingGame = false;
+        }
     }
 
     private void Update()
@@ -39,15 +60,18 @@ public class DeliveryManager : MonoBehaviour
 
     private void RecipeSpawn()
     {
-        if (deliveryWishesList.Count < deliveryWishesMax)
+        if (isPlayingGame)
         {
-            timerOfSpawnDeliveryWishes += Time.deltaTime;
-
-            if (timerOfSpawnDeliveryWishes >= timerOfSpawnDeliveryWishesMax)
+            if (deliveryWishesList.Count < deliveryWishesMax)
             {
-                deliveryWishesList.Add(deliveryMenu.DeliveryMenuSOList[UnityEngine.Random.Range(0, deliveryMenu.DeliveryMenuSOList.Count)]);
-                timerOfSpawnDeliveryWishes = 0;
-                OnRecipeSpawn?.Invoke();
+                timerOfSpawnDeliveryWishes += Time.deltaTime;
+
+                if (timerOfSpawnDeliveryWishes >= timerOfSpawnDeliveryWishesMax)
+                {
+                    deliveryWishesList.Add(deliveryMenu.DeliveryMenuSOList[UnityEngine.Random.Range(0, deliveryMenu.DeliveryMenuSOList.Count)]);
+                    timerOfSpawnDeliveryWishes = 0;
+                    OnRecipeSpawn?.Invoke();
+                }
             }
         }
     }
@@ -68,6 +92,8 @@ public class DeliveryManager : MonoBehaviour
             {
                 deliveryWishesList.Remove(deliveryWishesList[i]);
                 isFound = true;
+                deliveryScore++;
+
                 OnDeliveryCompleted?.Invoke();
                 OnDeliveryCompletedPlaySound?.Invoke();
                 break;
@@ -83,6 +109,11 @@ public class DeliveryManager : MonoBehaviour
     public List<DeliveryRecipeSO> GetDeliveryWishesList()
     {
         return deliveryWishesList;
+    }
+
+    public int GetDeliveryScore()
+    {
+        return deliveryScore;
     }
 }
 

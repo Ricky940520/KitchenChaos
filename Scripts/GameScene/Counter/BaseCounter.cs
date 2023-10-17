@@ -28,6 +28,11 @@ public class BaseCounter : MonoBehaviour, ISetKitchenObject
     /// </summary>
     public static Action OnKitchenObjectDropedPlaySound;
 
+    public static void ResetAll()
+    {
+        OnKitchenObjectDropedPlaySound = null;
+    }
+
     /// <summary>
     /// when ClearCounter has kitchen object return true otherwise false
     /// </summary>

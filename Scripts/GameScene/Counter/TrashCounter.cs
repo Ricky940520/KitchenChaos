@@ -10,6 +10,11 @@ public class TrashCounter : BaseCounter
     /// </summary>
     public static Action OnKitchenObjectTrashedPlaySound;
 
+    new public static void ResetAll()
+    {
+        OnKitchenObjectTrashedPlaySound=null;
+    }
+
     public override void Interact(PlayerInteract player)
     {
         if (player.PlayerHasKitchenObject())

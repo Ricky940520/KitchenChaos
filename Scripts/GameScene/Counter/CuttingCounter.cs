@@ -37,6 +37,11 @@ public class CuttingCounter : BaseCounter, IHasProgressBar
     /// </summary>
     public Action<float> OnProgressBarChanged { get; set; }
 
+    new public static void ResetAll()
+    {
+        OnCuttingPlaySound = null;
+    }
+
     private void Awake()
     {
         kitchenObjectSlicedSODic = new Dictionary<KitchenObjectSO, KitchenObjectSO>();

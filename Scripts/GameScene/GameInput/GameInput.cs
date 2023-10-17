@@ -22,6 +22,8 @@ public class GameInput : MonoBehaviour
     /// </summary>
     public Action<UnityEngine.InputSystem.InputAction.CallbackContext> OnInteractAlternateAction;
 
+    public Action OnGamePaused;
+
 
     private void Awake()
     {
@@ -31,6 +33,12 @@ public class GameInput : MonoBehaviour
 
         playerInputActions.Player.Interact.performed += Interact_performed;
         playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed;
+        playerInputActions.Player.Pause.performed += Pause_performed;
+    }
+
+    private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnGamePaused?.Invoke();
     }
 
     /// <summary>

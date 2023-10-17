@@ -6,9 +6,14 @@ using UnityEngine;
 public class PlayerSound : MonoBehaviour
 {
     private float timerOfFootStepSound = 0;
-    private float timerOfFootStepSoundMax = 1;
+    private float timerOfFootStepSoundMax = 0.7f;
 
     public static Action OnMovingPlaySound;
+
+    public static void ResetAll()
+    {
+        OnMovingPlaySound=null;
+    }
 
     private void Update()
     {
