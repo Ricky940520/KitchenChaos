@@ -11,6 +11,10 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioClipSO audioClipSO;
 
+    [SerializeField] private AudioSource musicAudioSource;
+
+    private float soundEffectVolume = 1f;
+
     private void Awake()
     {
         instance = this;
@@ -25,7 +29,27 @@ public class SoundManager : MonoBehaviour
         BaseCounter.OnKitchenObjectDropedPlaySound += BaseCounter_OnKitchenObjectDropedPlaySound;
         TrashCounter.OnKitchenObjectTrashedPlaySound += TrashCounter_OnKitchenObjectTrashedPlaySound;
         PlayerSound.OnMovingPlaySound += PlayFootStepSound;
-        
+
+    }
+
+    public void ChangeSoundEffectVolume(float volume)
+    {
+        soundEffectVolume = volume;
+    }
+
+    public float GetSoundEffectVolume()
+    {
+        return soundEffectVolume;
+    }
+
+    public void ChangeMusicVolume(float volume)
+    {
+        musicAudioSource.volume = volume;
+    }
+
+    public float GetMusicVolume()
+    {
+        return musicAudioSource.volume;
     }
 
     private void TrashCounter_OnKitchenObjectTrashedPlaySound()
@@ -56,12 +80,12 @@ public class SoundManager : MonoBehaviour
 
     private void PlaySoundEffect(AudioClip[] audioClipArray, Vector3 position, float volume = 1f)
     {
-        PlaySoundEffect(audioClipArray[Random.Range(0, audioClipArray.Length)], position, volume);
+        PlaySoundEffect(audioClipArray[Random.Range(0, audioClipArray.Length)], position, volume * soundEffectVolume);
     }
 
     private void PlaySoundEffect(AudioClip audioClip, Vector3 position, float volume = 1f)
     {
-        AudioSource.PlayClipAtPoint(audioClip, position, volume);
+        AudioSource.PlayClipAtPoint(audioClip, position, volume * soundEffectVolume);
     }
 
     /// <summary>
@@ -72,5 +96,5 @@ public class SoundManager : MonoBehaviour
         PlaySoundEffect(audioClipSO.FootStep, PlayerMove.Instance.transform.position);
     }
 
-    
+
 }

@@ -36,6 +36,10 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Pause.performed += Pause_performed;
     }
 
+    /// <summary>
+    /// when ESC pressed
+    /// </summary>
+    /// <param name="obj"></param>
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnGamePaused?.Invoke();

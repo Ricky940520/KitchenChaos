@@ -7,11 +7,11 @@ public class GamePauseUI : MonoBehaviour
 {
     [SerializeField] private Button resume;
     [SerializeField] private Button mainMenu;
+    [SerializeField] private Button options;
 
     private void Start()
     {
         KitchenChaosGameManager.Instance.OnGamePaused += KitchenChaosGameManager_OnGamePased;
-        Hide();
 
         resume.onClick.AddListener(() =>
         {
@@ -22,6 +22,14 @@ public class GamePauseUI : MonoBehaviour
         {
             Loader.LoadScene(Loader.Scene.MainMenu);
         });
+
+        options.onClick.AddListener(() =>
+        {
+            Hide();
+            OptionsUI.instance.Show();
+        });
+
+        Hide();
     }
 
     private void KitchenChaosGameManager_OnGamePased(bool isGamePasued)
