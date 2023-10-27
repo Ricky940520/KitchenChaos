@@ -5277,6 +5277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   counterPartentTransform: {fileID: 1807398286}
+  partentUI: {fileID: 1736783742}
 --- !u!1 &576188648
 GameObject:
   m_ObjectHideFlags: 0

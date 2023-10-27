@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TutorialUI123 : MonoBehaviour
+public class TutorialUI : MonoBehaviour
 {
-    public static TutorialUI123 Instance { get; private set; }
+    public static TutorialUI Instance { get; private set; }
 
     public Action OnTutorialHide;
-
-
 
     private void Awake()
     {
@@ -42,6 +40,7 @@ public class TutorialUI123 : MonoBehaviour
 
     private void Hide()
     {
+       
         this.gameObject.SetActive(false);
     }
 

@@ -31,6 +31,7 @@ public class DeliveryManager : MonoBehaviour
     private bool isPlayingGame = false;
 
     private int deliveryScore = 0;
+    private int deliveryScoreRate = 10;
 
     private void Awake()
     {
@@ -115,7 +116,12 @@ public class DeliveryManager : MonoBehaviour
 
     public int GetDeliveryScore()
     {
-        return deliveryScore;
+        return deliveryScore * deliveryScoreRate;
+    }
+
+    public void ResetScore()
+    {
+        deliveryScore = 0;
     }
 }
 

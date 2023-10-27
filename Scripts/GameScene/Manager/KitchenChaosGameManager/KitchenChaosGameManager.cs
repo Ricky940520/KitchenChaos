@@ -23,7 +23,7 @@ public class KitchenChaosGameManager : MonoBehaviour
     private readonly float waittingToStartTimerMax = 1.5f;
     private float countDownTimer = 3f;
     private readonly float countDownTimerMax = 3f;
-    private float PlayingTimer = 2f;
+    private float PlayingTimer = 30f;
     private readonly float PlayingTimerMax = 30f;
 
     public Action<GameState> OnStateChanged;
@@ -34,6 +34,8 @@ public class KitchenChaosGameManager : MonoBehaviour
 
     [SerializeField] private Transform counterPartentTransform;
 
+    [SerializeField] private Transform partentUI;
+
     private void Awake()
     {
         Instance = this;
@@ -42,7 +44,7 @@ public class KitchenChaosGameManager : MonoBehaviour
     private void Start()
     {
         GameInput.Instance.OnGamePaused += GameInput_OnGamePaused;
-        TutorialUI123.Instance.OnTutorialHide += GameStart;
+        TutorialUI.Instance.OnTutorialHide += GameStart;
     }
 
     public void GameInput_OnGamePaused()
@@ -145,13 +147,13 @@ public class KitchenChaosGameManager : MonoBehaviour
         {
             counter.GetComponent<BaseCounter>().ResetCounter();
         }
-        
-        if(PlayerInteract.Instance.GetPlayerKitchenObject()!=null)
+
+        if (PlayerInteract.Instance.GetPlayerKitchenObject() != null)
         {
             PlayerInteract.Instance.GetPlayerKitchenObject().DestroySelf();
         }
-        
 
+        DeliveryManager.Instance.ResetScore();
     }
 
     public void PlayAgain()
