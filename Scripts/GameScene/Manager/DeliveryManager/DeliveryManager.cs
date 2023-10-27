@@ -22,6 +22,7 @@ public class DeliveryManager : MonoBehaviour
     //about logic event
     public Action OnRecipeSpawn;
     public Action OnDeliveryCompleted;
+    public Action OnDeliveryFailed;
 
     //about sound event
     public Action OnDeliveryFailedPlaySound;
@@ -102,6 +103,7 @@ public class DeliveryManager : MonoBehaviour
 
         if (!isFound)
         {
+            OnDeliveryFailed?.Invoke();
             OnDeliveryFailedPlaySound?.Invoke();
         }
     }

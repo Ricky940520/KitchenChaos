@@ -35,8 +35,10 @@ public class KitchenObject : MonoBehaviour
     /// </summary>
     public void DestroySelf()
     {
+
         Destroy(this.gameObject);
         this.kitchenObjectSO = null;
+
     }
 
     /// <summary>

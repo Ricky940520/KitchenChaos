@@ -93,4 +93,15 @@ public class BaseCounter : MonoBehaviour, ISetKitchenObject
         this.kitchenObject = null;
         kitchenObjectTransform = null;
     }
+
+    public KitchenObject GetKitchenObject()
+    {
+        return kitchenObject;
+    }
+
+    public virtual void ResetCounter()
+    {
+        if (kitchenObject != null)
+            this.kitchenObject.DestroySelf();
+    }
 }

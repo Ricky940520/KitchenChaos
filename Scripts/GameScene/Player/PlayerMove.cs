@@ -34,6 +34,11 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     private void LateUpdate()
     {
+        if (KitchenChaosGameManager.Instance.GetGameState() != KitchenChaosGameManager.GameState.PlayingGame)
+        {
+            isMoving = false;
+            return;
+        }
         Vector3 inputVec3 = GameInput.Instance.GetMovementVectorNormalized();
 
         isMoving = (inputVec3 != Vector3.zero);
@@ -51,4 +56,6 @@ public class PlayerMove : MonoBehaviour
     {
         return isMoving;
     }
+
+
 }

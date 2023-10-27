@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,7 +10,19 @@ public class CountDownUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI countDown;
 
+    private Animator animator;
+
+    private int previousCountDownNumber = 0;
+    private int currentCountDwonNumber = 0;
+
+    private const string ANIMATOR_TRIGGER = "CounttingDown";
+
     private bool isCountingDown = false;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     private void Start()
     {
@@ -35,7 +48,15 @@ public class CountDownUI : MonoBehaviour
     {
         if (isCountingDown)
         {
-            countDown.text = math.ceil(KitchenChaosGameManager.Instance.GetCountDownTimer()).ToString();
+            currentCountDwonNumber = Mathf.CeilToInt(KitchenChaosGameManager.Instance.GetCountDownTimer());
+            countDown.text = currentCountDwonNumber.ToString();
+
+            if (previousCountDownNumber != currentCountDwonNumber)
+            {
+                previousCountDownNumber = currentCountDwonNumber;
+                animator.SetTrigger(ANIMATOR_TRIGGER);
+                SoundManager.instance.PlayWarningSound();
+            }
         }
     }
 

@@ -6,13 +6,13 @@ using UnityEngine;
 public class PlayerSound : MonoBehaviour
 {
     private float timerOfFootStepSound = 0;
-    private float timerOfFootStepSoundMax = 0.7f;
+    private float timerOfFootStepSoundMax = 0.4f;
 
     public static Action OnMovingPlaySound;
 
     public static void ResetAll()
     {
-        OnMovingPlaySound=null;
+        OnMovingPlaySound = null;
     }
 
     private void Update()
@@ -28,4 +28,6 @@ public class PlayerSound : MonoBehaviour
             }
         }
     }
+
+
 }

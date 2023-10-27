@@ -54,28 +54,28 @@ public class SoundManager : MonoBehaviour
 
     private void TrashCounter_OnKitchenObjectTrashedPlaySound()
     {
-        PlaySoundEffect(audioClipSO.Trash, PlayerInteract.Instance.transform.position);
+        PlaySoundEffect(audioClipSO.Trash, Camera.main.transform.position);
     }
     private void BaseCounter_OnKitchenObjectDropedPlaySound()
     {
-        PlaySoundEffect(audioClipSO.ObjectDrop, PlayerInteract.Instance.transform.position);
+        PlaySoundEffect(audioClipSO.ObjectDrop, Camera.main.transform.position);
     }
     private void PlayerInteract_OnPlayerGrabSomethingPlaySound()
     {
-        PlaySoundEffect(audioClipSO.ObjectPickUp, PlayerInteract.Instance.transform.position);
+        PlaySoundEffect(audioClipSO.ObjectPickUp, Camera.main.transform.position);
     }
-    private void CuttingCounter_OnCuttingPlaySound(CuttingCounter cuttingCounter)
+    private void CuttingCounter_OnCuttingPlaySound()
     {
-        PlaySoundEffect(audioClipSO.Chop, cuttingCounter.transform.position);
+        PlaySoundEffect(audioClipSO.Chop, Camera.main.transform.position);
     }
     private void DeliveryManager_OnDeliveryCompletedPlaySound()
     {
-        PlaySoundEffect(audioClipSO.DeliverySuccess, DeliveryCounter.Instance.transform.position);
+        PlaySoundEffect(audioClipSO.DeliverySuccess, Camera.main.transform.position);
     }
 
     private void DeliveryManager_OnDeliveryFailedPlaySound()
     {
-        PlaySoundEffect(audioClipSO.DeliveryFail, DeliveryCounter.Instance.transform.position);
+        PlaySoundEffect(audioClipSO.DeliveryFail, Camera.main.transform.position);
     }
 
     private void PlaySoundEffect(AudioClip[] audioClipArray, Vector3 position, float volume = 1f)
@@ -93,7 +93,12 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     public void PlayFootStepSound()
     {
-        PlaySoundEffect(audioClipSO.FootStep, PlayerMove.Instance.transform.position);
+        PlaySoundEffect(audioClipSO.FootStep, Camera.main.transform.position);
+    }
+
+    public void PlayWarningSound()
+    {
+        PlaySoundEffect(audioClipSO.Warning, Camera.main.transform.position);
     }
 
 

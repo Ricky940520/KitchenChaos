@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,15 +14,23 @@ public class ProgressBar : MonoBehaviour
     [SerializeField] private BaseCounter counter;
     private IHasProgressBar progressBar;
 
+    [SerializeField] private KitchenObjectSO meatPattyCooked;
+
+    public Action OnWarning;
+    public Action OnIdle;
+
+
     private void Awake()
     {
         cuttingProcessBar = GetComponent<Image>();
         progressBar = counter.GetComponent<IHasProgressBar>();
+
     }
 
     private void Start()
     {
         progressBar.OnProgressBarChanged += IHasProgressBar_OnProgressBarChanged;
+
         Hide();
     }
 
@@ -41,8 +50,20 @@ public class ProgressBar : MonoBehaviour
         {
             cuttingProcessBar.fillAmount = cuttingProcessPercent;
             Hide();
+            //if (counter is StoveCounter)
+            //    OnIdle?.Invoke();
         }
 
+        if (cuttingProcessPercent > 0.5f && cuttingProcessPercent < 1)
+        {
+            if (counter is StoveCounter)
+                OnWarning?.Invoke();
+        }
+        else
+        {
+            if (counter is StoveCounter)
+                OnIdle?.Invoke();
+        }
     }
 
     private void Hide()
@@ -54,5 +75,7 @@ public class ProgressBar : MonoBehaviour
     {
         this.transform.parent.gameObject.SetActive(true);
     }
+
+
 
 }

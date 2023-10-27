@@ -8,9 +8,23 @@ public class GameOverUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreImage;
 
+    [SerializeField] private Button playAgainButton;
+    [SerializeField] private Button mainMenuButton;
+
     private void Start()
     {
         KitchenChaosGameManager.Instance.OnStateChanged += KitchenChaosGameManager_OnStateChanged;
+
+        playAgainButton.onClick.AddListener(() =>
+        {
+            KitchenChaosGameManager.Instance.PlayAgain();
+        });
+
+        mainMenuButton.onClick.AddListener(() =>
+        {
+            KitchenChaosGameManager.Instance.BackToMainMenu();
+        });
+
         Hide();
     }
 
@@ -24,7 +38,6 @@ public class GameOverUI : MonoBehaviour
         else
         {
             Hide();
-
         }
     }
 

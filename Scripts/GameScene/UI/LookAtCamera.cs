@@ -19,12 +19,12 @@ public class LookAtCamera : MonoBehaviour
         switch (lookAtMode)
         {
             case LookAtMode.CameraForward:
-                this.transform.LookAt(Camera.main.transform);
-                //transform.forward = Camera.main.transform.forward;
+                //this.transform.LookAt(Camera.main.transform);
+                transform.forward = Camera.main.transform.forward;
                 break;
             case LookAtMode.CameraForwardInverted:
-                this.transform.LookAt(-Camera.main.transform.position);
-                //transform.forward = -Camera.main.transform.forward;
+                //this.transform.LookAt(-Camera.main.transform.position);
+                transform.forward = -Camera.main.transform.forward;
                 break;
         }
 

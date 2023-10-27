@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static KitchenChaosGameManager;
 
 public class StoveCounter : BaseCounter, IHasProgressBar
 {
@@ -18,7 +19,7 @@ public class StoveCounter : BaseCounter, IHasProgressBar
     /// <summary>
     /// Frying timer
     /// </summary>
-    private float FryingMeatTimer;
+    private float fryingMeatTimer;
 
     /// <summary>
     /// your current frying recipe 
@@ -35,17 +36,33 @@ public class StoveCounter : BaseCounter, IHasProgressBar
     /// </summary>
     public Action<float> OnProgressBarChanged { get; set; }
 
+
     private void Start()
     {
         isFrying = false;
-        FryingMeatTimer = 0;
+        fryingMeatTimer = 0;
         currentFryingRecipeSO = null;
     }
 
     private void Update()
     {
-        StartFryingMeat();
+        if (KitchenChaosGameManager.Instance.GetGameState() == GameState.PlayingGame)
+        {
+            StartFryingMeat();
+        }
+
     }
+
+    public override void ResetCounter()
+    {
+        base.ResetCounter();
+        isFrying = false;
+        OnIsFryingChanged?.Invoke(isFrying);
+        fryingMeatTimer = 0;
+
+        OnProgressBarChanged?.Invoke(1);
+    }
+
 
     public override void Interact(PlayerInteract player)
     {
@@ -116,12 +133,12 @@ public class StoveCounter : BaseCounter, IHasProgressBar
     {
         if (isFrying)
         {
-            FryingMeatTimer += Time.deltaTime;
-            float fryProgressPercent = FryingMeatTimer / currentFryingRecipeSO.CookingTime;
+            fryingMeatTimer += Time.deltaTime;
+            float fryProgressPercent = fryingMeatTimer / currentFryingRecipeSO.CookingTime;
 
             OnProgressBarChanged?.Invoke(fryProgressPercent);
 
-            if (FryingMeatTimer >= currentFryingRecipeSO.CookingTime)
+            if (fryingMeatTimer >= currentFryingRecipeSO.CookingTime)
             {
                 Destroy(kitchenObjectTransform.gameObject);
                 kitchenObjectTransform = Instantiate(currentFryingRecipeSO.OutputMeatPattyKitchenObjectSO.Prefab, GetCounterTopPoint());
@@ -135,12 +152,12 @@ public class StoveCounter : BaseCounter, IHasProgressBar
                 {
                     case 0:
                         isFrying = true;
-                        FryingMeatTimer = 0;
+                        fryingMeatTimer = 0;
                         currentFryingRecipeSO = fryRecipeSOArray[1];
                         break;
                     case 1:
                         isFrying = false;
-                        FryingMeatTimer = 0;
+                        fryingMeatTimer = 0;
                         currentFryingRecipeSO = null;
                         OnIsFryingChanged?.Invoke(isFrying);
                         OnProgressBarChanged?.Invoke(1);
@@ -157,7 +174,20 @@ public class StoveCounter : BaseCounter, IHasProgressBar
     private void Refrying()
     {
         isFrying = false;
-        FryingMeatTimer = 0;
+        fryingMeatTimer = 0;
         currentFryingRecipeSO = null;
+    }
+
+    public bool IsFried()
+    {
+        if (Array.IndexOf(fryRecipeSOArray, currentFryingRecipeSO) == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }

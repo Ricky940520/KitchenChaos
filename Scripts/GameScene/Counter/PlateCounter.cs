@@ -22,6 +22,11 @@ public class PlateCounter : BaseCounter
 
     private void Update()
     {
+        if (KitchenChaosGameManager.Instance.GetGameState() != KitchenChaosGameManager.GameState.PlayingGame)
+        {
+            return;
+        }
+
         if (plateSpawnAmount < plateSpawnAmountMax)
         {
             //when the plate can be spawned

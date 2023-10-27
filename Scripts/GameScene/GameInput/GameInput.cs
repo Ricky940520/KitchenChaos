@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour
 {
@@ -24,11 +25,29 @@ public class GameInput : MonoBehaviour
 
     public Action OnGamePaused;
 
+    private const string PLAYER_PREFS_BINDINGS = "InputBindings";
+
+    public enum KeyBinding
+    {
+        Up,
+        Down,
+        Left,
+        Right,
+        Interace,
+        Alternate
+    }
+
 
     private void Awake()
     {
         Instance = this;
         playerInputActions = new PlayerInputActions();
+
+        if (PlayerPrefs.HasKey(PLAYER_PREFS_BINDINGS))
+        {
+            playerInputActions.LoadBindingOverridesFromJson(PlayerPrefs.GetString(PLAYER_PREFS_BINDINGS));
+        }
+
         playerInputActions.Player.Enable();
 
         playerInputActions.Player.Interact.performed += Interact_performed;
@@ -70,5 +89,95 @@ public class GameInput : MonoBehaviour
         Vector2 moveDir = inputVec2.normalized;
 
         return new Vector3(moveDir.x, 0, moveDir.y);
+    }
+
+    /// <summary>
+    /// key rebinging
+    /// </summary>
+    public void KeyReBinding(KeyBinding keyBinding, Action onCompleted)
+    {
+        playerInputActions.Player.Disable();
+
+        InputAction inputAction;
+        int rebindingIndex = -1;
+
+        switch (keyBinding)
+        {
+            case KeyBinding.Up:
+                inputAction = playerInputActions.Player.Move;
+                rebindingIndex = 1;
+                break;
+
+            case KeyBinding.Down:
+                inputAction = playerInputActions.Player.Move;
+                rebindingIndex = 2;
+                break;
+
+            case KeyBinding.Left:
+                inputAction = playerInputActions.Player.Move;
+                rebindingIndex = 3;
+                break;
+
+            case KeyBinding.Right:
+                inputAction = playerInputActions.Player.Move;
+                rebindingIndex = 4;
+                break;
+
+            case KeyBinding.Interace:
+                inputAction = playerInputActions.Player.Interact;
+                rebindingIndex = 0;
+                break;
+
+            case KeyBinding.Alternate:
+                inputAction = playerInputActions.Player.InteractAlternate;
+                rebindingIndex = 0;
+                break;
+
+            default:
+                inputAction = new InputAction();
+                break;
+        }
+
+        inputAction?.PerformInteractiveRebinding(rebindingIndex)
+                    .OnComplete(callback =>
+                    {
+                        callback.Dispose();
+                        playerInputActions.Player.Enable();
+
+                        PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, playerInputActions.SaveBindingOverridesAsJson());
+                        PlayerPrefs.Save();
+                        onCompleted();
+                    })
+                    .Start();
+
+    }
+
+    public string GetKeyRebindingString(KeyBinding keyBinding)
+    {
+        string keyName = string.Empty;
+
+        switch (keyBinding)
+        {
+            case KeyBinding.Up:
+                keyName = playerInputActions.Player.Move.bindings[1].ToDisplayString();
+                break;
+            case KeyBinding.Down:
+                keyName = playerInputActions.Player.Move.bindings[2].ToDisplayString();
+                break;
+            case KeyBinding.Left:
+                keyName = playerInputActions.Player.Move.bindings[3].ToDisplayString();
+                break;
+            case KeyBinding.Right:
+                keyName = playerInputActions.Player.Move.bindings[4].ToDisplayString();
+                break;
+            case KeyBinding.Interace:
+                keyName = playerInputActions.Player.Interact.bindings[0].ToDisplayString();
+                break;
+            case KeyBinding.Alternate:
+                keyName = playerInputActions.Player.InteractAlternate.bindings[0].ToDisplayString();
+                break;
+        }
+
+        return keyName;
     }
 }

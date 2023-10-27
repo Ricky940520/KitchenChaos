@@ -47,6 +47,7 @@ public class GamePauseUI : MonoBehaviour
     private void Show()
     {
         this.gameObject.SetActive(true);
+        resume.Select();
     }
 
     private void Hide()

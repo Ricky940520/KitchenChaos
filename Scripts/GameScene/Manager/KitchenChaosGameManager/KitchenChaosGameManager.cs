@@ -9,6 +9,7 @@ public class KitchenChaosGameManager : MonoBehaviour
 
     public enum GameState
     {
+        WaittingToPressInteract,
         WaittingToStart,
         CountDown,
         PlayingGame,
@@ -16,19 +17,22 @@ public class KitchenChaosGameManager : MonoBehaviour
         Nane
     }
 
-    private GameState state;
+    private GameState state = GameState.WaittingToPressInteract;
 
     private float waittingToStartTimer = 1.5f;
     private readonly float waittingToStartTimerMax = 1.5f;
     private float countDownTimer = 3f;
     private readonly float countDownTimerMax = 3f;
-    private float PlayingTimer = 30f;
+    private float PlayingTimer = 2f;
     private readonly float PlayingTimerMax = 30f;
 
     public Action<GameState> OnStateChanged;
     public Action<bool> OnGamePaused;
+    public Action OnGameResume;
 
     private bool isGamePaused = false;
+
+    [SerializeField] private Transform counterPartentTransform;
 
     private void Awake()
     {
@@ -38,10 +42,16 @@ public class KitchenChaosGameManager : MonoBehaviour
     private void Start()
     {
         GameInput.Instance.OnGamePaused += GameInput_OnGamePaused;
+        TutorialUI123.Instance.OnTutorialHide += GameStart;
     }
 
     public void GameInput_OnGamePaused()
     {
+        if (state == GameState.WaittingToPressInteract)
+        {
+            return;
+        }
+
         isGamePaused = !isGamePaused;
 
         if (isGamePaused)
@@ -51,10 +61,13 @@ public class KitchenChaosGameManager : MonoBehaviour
         else
         {
             Time.timeScale = 1;
+            OnGameResume?.Invoke();
         }
 
         OnGamePaused?.Invoke(isGamePaused);
     }
+
+
 
     private void Update()
     {
@@ -64,7 +77,7 @@ public class KitchenChaosGameManager : MonoBehaviour
 
                 waittingToStartTimer -= Time.deltaTime;
 
-                if (waittingToStartTimer < 0)
+                //if (waittingToStartTimer < 0)
                 {
                     state = GameState.CountDown;
                     OnStateChanged?.Invoke(state);
@@ -96,6 +109,8 @@ public class KitchenChaosGameManager : MonoBehaviour
 
             case GameState.GameOver:
                 OnStateChanged?.Invoke(state);
+
+
                 break;
         }
     }
@@ -108,5 +123,46 @@ public class KitchenChaosGameManager : MonoBehaviour
     public float GetPlayingTimerNormalized()
     {
         return 1 - (PlayingTimer / PlayingTimerMax);
+    }
+
+    public GameState GetGameState()
+    {
+        return state;
+    }
+
+    public void GameStart()
+    {
+        state = GameState.WaittingToStart;
+    }
+
+    private void GameReset()
+    {
+        waittingToStartTimer = waittingToStartTimerMax;
+        countDownTimer = countDownTimerMax;
+        PlayingTimer = PlayingTimerMax;
+
+        foreach (Transform counter in counterPartentTransform)
+        {
+            counter.GetComponent<BaseCounter>().ResetCounter();
+        }
+        
+        if(PlayerInteract.Instance.GetPlayerKitchenObject()!=null)
+        {
+            PlayerInteract.Instance.GetPlayerKitchenObject().DestroySelf();
+        }
+        
+
+    }
+
+    public void PlayAgain()
+    {
+        state = GameState.WaittingToStart;
+
+        GameReset();
+    }
+
+    public void BackToMainMenu()
+    {
+        Loader.LoadScene(Loader.Scene.MainMenu);
     }
 }

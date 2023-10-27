@@ -30,7 +30,7 @@ public class CuttingCounter : BaseCounter, IHasProgressBar
     /// <summary>
     /// Play Sound Effect
     /// </summary>
-    public static Action<CuttingCounter> OnCuttingPlaySound;
+    public static Action OnCuttingPlaySound;
 
     /// <summary>
     /// Update Progress Bar
@@ -56,6 +56,14 @@ public class CuttingCounter : BaseCounter, IHasProgressBar
         }
 
         cutProcessCount = 0;
+    }
+
+    public override void ResetCounter()
+    {
+        base.ResetCounter();
+        cutProcessCount = 0;
+
+        OnProgressBarChanged?.Invoke(1);
     }
 
     public override void Interact(PlayerInteract player)
@@ -135,7 +143,7 @@ public class CuttingCounter : BaseCounter, IHasProgressBar
         float cutProcessPercent = (float)cutProcessCount / cutProcessMaximum;
         OnProgressBarChanged?.Invoke(cutProcessPercent);
         OnCutProcessCountChangedFireAnimator?.Invoke();
-        OnCuttingPlaySound?.Invoke(this);
+        OnCuttingPlaySound?.Invoke();
 
         if (cutProcessCount >= cutProcessMaximum)
         {

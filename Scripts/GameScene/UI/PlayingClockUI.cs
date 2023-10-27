@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayingClock : MonoBehaviour
+public class PlayingClockUI : MonoBehaviour
 {
     [SerializeField] private Image clock;
 
