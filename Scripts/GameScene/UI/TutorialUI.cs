@@ -40,9 +40,18 @@ public class TutorialUI : MonoBehaviour
 
     private void Hide()
     {
-       
         this.gameObject.SetActive(false);
     }
 
+    public void ResetSelf()
+    {
+        Delegate[] eventHandlers = OnTutorialHide.GetInvocationList();
 
+        foreach (Delegate handler in eventHandlers)
+        {
+            OnTutorialHide -= (Action)handler;
+        }
+
+        Hide();
+    }
 }

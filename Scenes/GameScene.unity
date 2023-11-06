@@ -4251,7 +4251,7 @@ PrefabInstance:
     - target: {fileID: 2890525930342395575, guid: 4f8dd2f596d5bbe4db23cf0138b2c33b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2890525930342395575, guid: 4f8dd2f596d5bbe4db23cf0138b2c33b,
         type: 3}
@@ -5276,6 +5276,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbcff7976b8b1a489c208fc299baa80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayingTimer: 30
+  PlayingTimerMax: 30
   counterPartentTransform: {fileID: 1807398286}
   partentUI: {fileID: 1736783742}
 --- !u!1 &576188648
@@ -13961,7 +13963,7 @@ PrefabInstance:
     - target: {fileID: 2890525930342395575, guid: 427c7981237b0ec46a46ead19ad69529,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2890525930342395575, guid: 427c7981237b0ec46a46ead19ad69529,
         type: 3}

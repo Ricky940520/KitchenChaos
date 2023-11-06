@@ -23,8 +23,8 @@ public class KitchenChaosGameManager : MonoBehaviour
     private readonly float waittingToStartTimerMax = 1.5f;
     private float countDownTimer = 3f;
     private readonly float countDownTimerMax = 3f;
-    private float PlayingTimer = 30f;
-    private readonly float PlayingTimerMax = 30f;
+    [SerializeField] private float PlayingTimer = 30f;
+    [SerializeField] private float PlayingTimerMax = 30f;
 
     public Action<GameState> OnStateChanged;
     public Action<bool> OnGamePaused;
@@ -145,6 +145,10 @@ public class KitchenChaosGameManager : MonoBehaviour
 
         foreach (Transform counter in counterPartentTransform)
         {
+            if (counter.GetComponent<BaseCounter>() is PlateCounter)
+            {
+                continue;
+            }
             counter.GetComponent<BaseCounter>().ResetCounter();
         }
 
@@ -154,6 +158,8 @@ public class KitchenChaosGameManager : MonoBehaviour
         }
 
         DeliveryManager.Instance.ResetScore();
+
+        //TutorialUI.Instance.ResetSelf();
     }
 
     public void PlayAgain()
