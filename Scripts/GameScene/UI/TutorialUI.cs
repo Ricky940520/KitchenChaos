@@ -21,7 +21,6 @@ public class TutorialUI : MonoBehaviour
 
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
 
-
     }
 
     private void GameInput_OnInteractAction(UnityEngine.InputSystem.InputAction.CallbackContext callbackContext)
@@ -43,15 +42,5 @@ public class TutorialUI : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    public void ResetSelf()
-    {
-        Delegate[] eventHandlers = OnTutorialHide.GetInvocationList();
 
-        foreach (Delegate handler in eventHandlers)
-        {
-            OnTutorialHide -= (Action)handler;
-        }
-
-        Hide();
-    }
 }

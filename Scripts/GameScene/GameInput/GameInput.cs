@@ -11,7 +11,7 @@ public class GameInput : MonoBehaviour
     /// </summary>
     public static GameInput Instance;
 
-    private PlayerInputActions playerInputActions;
+    public PlayerInputActions playerInputActions;
 
     /// <summary>
     /// Interact Action
@@ -54,6 +54,25 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed;
         playerInputActions.Player.Pause.performed += Pause_performed;
     }
+
+    private void OnDisable()
+    {
+        playerInputActions.Player.Disable();
+
+        playerInputActions.Player.Interact.performed -= Interact_performed;
+        playerInputActions.Player.InteractAlternate.performed -= InteractAlternate_performed;
+        playerInputActions.Player.Pause.performed -= Pause_performed;
+    }
+
+    private void OnEnable()
+    {
+        playerInputActions.Player.Enable();
+
+        playerInputActions.Player.Interact.performed += Interact_performed;
+        playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed;
+        playerInputActions.Player.Pause.performed += Pause_performed;
+    }
+
 
     /// <summary>
     /// when ESC pressed

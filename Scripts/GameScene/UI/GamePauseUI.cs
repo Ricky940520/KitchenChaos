@@ -34,6 +34,11 @@ public class GamePauseUI : MonoBehaviour
 
     private void KitchenChaosGameManager_OnGamePased(bool isGamePasued)
     {
+        if (KitchenChaosGameManager.Instance.GetGameState() == KitchenChaosGameManager.GameState.GameOver)
+        {
+            return;
+        }
+
         if (isGamePasued)
         {
             Show();
