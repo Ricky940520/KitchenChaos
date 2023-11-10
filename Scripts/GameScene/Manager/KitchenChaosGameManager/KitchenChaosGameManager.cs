@@ -49,7 +49,7 @@ public class KitchenChaosGameManager : MonoBehaviour
 
     public void GameInput_OnGamePaused()
     {
-        if (state == GameState.WaittingToPressInteract)
+        if (state == GameState.WaittingToPressInteract || state == GameState.GameOver)
         {
             return;
         }
